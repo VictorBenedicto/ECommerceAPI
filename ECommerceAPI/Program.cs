@@ -13,6 +13,7 @@ builder.Services.AddDbContext<EcomDbContext>(option =>
 });
 
 builder.Services.AddSingleton<DapperContext>();
+builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

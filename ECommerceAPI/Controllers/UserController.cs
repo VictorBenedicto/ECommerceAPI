@@ -51,6 +51,5 @@ namespace ECommerceAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
     }
 }
