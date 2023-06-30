@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerceAPI.Migrations
 {
     [DbContext(typeof(EcomDbContext))]
-    [Migration("20230629144810_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230630022007_SeedingDataTable")]
+    partial class SeedingDataTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -79,14 +79,39 @@ namespace ECommerceAPI.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Firstname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Lastname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = new Guid("44406f2e-7f21-4af4-bb43-7e47887ae58f"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Firstname = "Victor",
+                            Lastname = "Benedicto"
+                        },
+                        new
+                        {
+                            UserId = new Guid("901ca54f-cfa6-4abe-9ccb-f3525b75ec9d"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Firstname = "Elisha",
+                            Lastname = "Rebucas"
+                        },
+                        new
+                        {
+                            UserId = new Guid("3230bbc4-7487-4f8e-b873-5b60b2459ffc"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Firstname = "Caloy",
+                            Lastname = "Nolimark"
+                        });
                 });
 
             modelBuilder.Entity("ECommerceAPI.Entities.CartItem", b =>
