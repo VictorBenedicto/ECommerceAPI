@@ -32,6 +32,7 @@ namespace ECommerceAPI.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post([FromBody] DTOAddCartItem cartItem)
         {
@@ -43,6 +44,38 @@ namespace ECommerceAPI.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut("{CartItemId:Guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Put(Guid CartItemId, [FromBody] DTOUpdateCartItem upCartItem)
+        {
+            try
+            {
+                var change = _cartItemRepository.Put(CartItemId, upCartItem);
+                return Ok(change);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{CartItemId:Guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Delete(Guid CartItemId)
+        {
+            try
+            {
+                _cartItemRepository.Delete(CartItemId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }

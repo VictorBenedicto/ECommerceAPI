@@ -68,7 +68,7 @@ namespace ECommerceAPI.Repositories
 
         public bool Put(Guid CartItemId, DTOUpdateCartItem upcartitem)
         {
-            var ChangeCartItem = _connection.CartItems.FirstOrDefault(c => c.CartItemId == CartItemId);
+            var ChangeCartItem = _connection.CartItems.FirstOrDefault(c => c.CartItemId.Equals(CartItemId));
             if (ChangeCartItem != null)
             {
                 ChangeCartItem.CartItemName = upcartitem.CartItemName;
