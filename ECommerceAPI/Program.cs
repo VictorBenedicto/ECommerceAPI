@@ -1,11 +1,20 @@
 using ECommerceAPI.Contexts;
 using ECommerceAPI.Interfaces;
+using ECommerceAPI.Middlewares;
 using ECommerceAPI.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ECommerceAPI",  Version = "v1" });
+    c.OperationFilter<AddCustomHeaderOperationFilter>();
+});
 
 builder.Services.AddDbContext<EcomDbContext>(option =>
 {
@@ -26,8 +35,13 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "ECommerceAPI");
+    });
 }
+
+app.UseMiddleware<AuthMiddleware>();
 
 app.UseHttpsRedirection();
 
@@ -36,3 +50,24 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public class AddCustomHeaderOperationFilter : IOperationFilter
+{
+    public void Apply(OpenApiOperation operation, OperationFilterContext context)
+    {
+        if(operation.Parameters == null)
+            operation.Parameters = new List<OpenApiParameter>();
+
+        operation.Parameters.Add(new OpenApiParameter 
+        {
+            Name = "x-user-id",
+            In = ParameterLocation.Header,
+            Description = "Custom Header",
+            Required = false,
+            Schema = new OpenApiSchema
+            {
+                Type = "string"
+            }
+        });
+    }
+}
