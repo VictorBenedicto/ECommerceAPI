@@ -33,12 +33,12 @@ namespace ECommerceAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Post([FromBody] DTOAddCartItem cartItem)
+        public async Task<IActionResult> Post([FromBody] DTOAddCartItem cartItem)
         {
             try
             {
-                _cartItemRepository.Post(cartItem);
-                return Ok();
+                await _cartItemRepository.Post(cartItem);
+                return NoContent();
             }
             catch (Exception ex)
             {

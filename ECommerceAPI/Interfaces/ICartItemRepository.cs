@@ -7,6 +7,8 @@ namespace ECommerceAPI.Interfaces
     public interface ICartItemRepository
     {
         public Task<IEnumerable<CartItem>> GetCartItems();
-        public void Post(DTOAddCartItem cartItem);
+        public Task<Guid> Post(DTOAddCartItem cartItem);
+        public bool Put(Guid  CartItemId, DTOUpdateCartItem upcartitem);
+        public void Delete(Guid CartItemId);
     }
 }

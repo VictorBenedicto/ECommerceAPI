@@ -90,21 +90,21 @@ namespace ECommerceAPI.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("44406f2e-7f21-4af4-bb43-7e47887ae58f"),
+                            UserId = new Guid("9744671f-bfe8-4ace-b74f-609c2df354d6"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Firstname = "Victor",
                             Lastname = "Benedicto"
                         },
                         new
                         {
-                            UserId = new Guid("901ca54f-cfa6-4abe-9ccb-f3525b75ec9d"),
+                            UserId = new Guid("ab38e432-95b1-4c4f-b53d-11fa25c77bc7"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Firstname = "Elisha",
                             Lastname = "Rebucas"
                         },
                         new
                         {
-                            UserId = new Guid("3230bbc4-7487-4f8e-b873-5b60b2459ffc"),
+                            UserId = new Guid("ea8853b5-dbcd-4d04-9f2b-6991c408cfd6"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Firstname = "Caloy",
                             Lastname = "Nolimark"

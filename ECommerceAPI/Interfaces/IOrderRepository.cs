@@ -1,4 +1,5 @@
-﻿using ECommerceAPI.Entities;
+﻿using ECommerceAPI.DTOs;
+using ECommerceAPI.Entities;
 
 namespace ECommerceAPI.Interfaces
 {
@@ -6,5 +7,7 @@ namespace ECommerceAPI.Interfaces
     {
         public Task<IEnumerable<Order>> GetOrders();
         public Task<Order> GetOrder(Guid OrderId);
+        public Task Put(Guid OrderId, DTOOrderUpdate uporder);
+        public Task Delete(Guid OrderId);
     }
 }

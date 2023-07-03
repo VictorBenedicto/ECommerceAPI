@@ -9,8 +9,6 @@ namespace ECommerceAPI.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid CartItemId { get; set; }
         public string? CartItemName { get; set; }
-
-        [ForeignKey(nameof(User))]
         public Guid UserId { get; set; }
 
         [ForeignKey(nameof(Order))]

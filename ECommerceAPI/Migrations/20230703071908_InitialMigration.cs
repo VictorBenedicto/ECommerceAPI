@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace ECommerceAPI.Migrations
 {
     /// <inheritdoc />
@@ -16,8 +18,8 @@ namespace ECommerceAPI.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Firstname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Lastname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Firstname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Lastname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -63,6 +65,16 @@ namespace ECommerceAPI.Migrations
                         principalTable: "Orders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "UserId", "CreatedAt", "Firstname", "Lastname" },
+                values: new object[,]
+                {
+                    { new Guid("9744671f-bfe8-4ace-b74f-609c2df354d6"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Victor", "Benedicto" },
+                    { new Guid("ab38e432-95b1-4c4f-b53d-11fa25c77bc7"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Elisha", "Rebucas" },
+                    { new Guid("ea8853b5-dbcd-4d04-9f2b-6991c408cfd6"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Caloy", "Nolimark" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerceAPI.Migrations
 {
     [DbContext(typeof(EcomDbContext))]
-    [Migration("20230629144810_InitialMigration")]
+    [Migration("20230703071908_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -79,14 +79,39 @@ namespace ECommerceAPI.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Firstname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Lastname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = new Guid("9744671f-bfe8-4ace-b74f-609c2df354d6"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Firstname = "Victor",
+                            Lastname = "Benedicto"
+                        },
+                        new
+                        {
+                            UserId = new Guid("ab38e432-95b1-4c4f-b53d-11fa25c77bc7"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Firstname = "Elisha",
+                            Lastname = "Rebucas"
+                        },
+                        new
+                        {
+                            UserId = new Guid("ea8853b5-dbcd-4d04-9f2b-6991c408cfd6"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Firstname = "Caloy",
+                            Lastname = "Nolimark"
+                        });
                 });
 
             modelBuilder.Entity("ECommerceAPI.Entities.CartItem", b =>

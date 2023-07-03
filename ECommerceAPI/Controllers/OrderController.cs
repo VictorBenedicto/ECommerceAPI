@@ -1,4 +1,5 @@
-﻿using ECommerceAPI.Interfaces;
+﻿using ECommerceAPI.DTOs;
+using ECommerceAPI.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,5 +50,36 @@ namespace ECommerceAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPut("{OrderId:Guid}")]
+        public async Task<IActionResult> Put(Guid OrderId, DTOOrderUpdate uporder)
+        {
+            try
+            {
+                await _orderRepository.Put(OrderId, uporder);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{OrderId:Guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Delete(Guid OrderId)
+        {
+            try
+            {
+                await _orderRepository.Delete(OrderId);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }
