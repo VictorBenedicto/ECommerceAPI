@@ -22,6 +22,7 @@ builder.Services.AddDbContext<EcomDbContext>(option =>
 });
 
 builder.Services.AddSingleton<DapperContext>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddControllers();

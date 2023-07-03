@@ -1,6 +1,10 @@
-﻿namespace ECommerceAPI.Interfaces
+﻿using ECommerceAPI.Entities;
+
+namespace ECommerceAPI.Interfaces
 {
-    public class IOrderRepository
+    public interface IOrderRepository
     {
+        public Task<IEnumerable<Order>> GetOrders();
+        public Task<Order> GetOrder(Guid OrderId);
     }
 }
