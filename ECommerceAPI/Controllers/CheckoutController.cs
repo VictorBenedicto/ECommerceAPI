@@ -1,6 +1,8 @@
-﻿using ECommerceAPI.DTOs;
+﻿using ECommerceAPI.Commands;
+using ECommerceAPI.DTOs;
 using ECommerceAPI.Entities;
 using ECommerceAPI.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
@@ -12,10 +14,12 @@ namespace ECommerceAPI.Controllers
     public class CheckoutController : ControllerBase
     {
         private readonly ICheckoutRepository _checkoutRepository;
+        private readonly IMediator _mediator;
 
-        public CheckoutController (ICheckoutRepository checkoutRepository)
+        public CheckoutController (ICheckoutRepository checkoutRepository, IMediator mediator)
         {
             _checkoutRepository = checkoutRepository;
+            _mediator = mediator;
         }
 
         [HttpPut]
@@ -29,7 +33,7 @@ namespace ECommerceAPI.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                await _checkoutRepository.Checkout(checkout);
+                await _mediator.Send(new CheckoutOrderCommand(checkout));
                 return Ok();
             }
             catch (Exception ex)
