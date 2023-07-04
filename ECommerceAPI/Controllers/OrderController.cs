@@ -75,7 +75,7 @@ namespace ECommerceAPI.Controllers
         {
             try
             {
-                await _orderRepository.Delete(OrderId);
+                await _mediator.Send(new DeleteOrderCommand(OrderId));
                 return NoContent();
             }
             catch (Exception ex)

@@ -9,6 +9,6 @@ namespace ECommerceAPI.Interfaces
         public Task<IEnumerable<CartItem>> GetCartItems();
         public Task<Guid> Post(DTOAddCartItem cartItem);
         public Task Put(Guid  CartItemId, DTOUpdateCartItem upcartitem);
-        public void Delete(Guid CartItemId);
+        public Task Delete(Guid CartItemId);
     }
 }

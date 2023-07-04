@@ -63,11 +63,11 @@ namespace ECommerceAPI.Controllers
         [HttpDelete("{CartItemId:Guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Delete(Guid CartItemId)
+        public async Task<IActionResult> Delete(Guid CartItemId)
         {
             try
             {
-                _cartItemRepository.Delete(CartItemId);
+                await _mediator.Send(new DeleteCartItemCommand(CartItemId));
                 return Ok();
             }
             catch (Exception ex)

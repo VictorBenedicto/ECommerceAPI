@@ -79,14 +79,11 @@ namespace ECommerceAPI.Repositories
             }
         }
 
-        public void Delete(Guid CartItemId)
+        public async Task Delete(Guid CartItemId)
         {
-            var DeleteCartItem = _connection.CartItems.FirstOrDefault(c => c.CartItemId.Equals(CartItemId));
-            if (DeleteCartItem != null)
-            {
+            var DeleteCartItem =  _connection.CartItems.FirstOrDefault(c => c.CartItemId.Equals(CartItemId)) ?? throw new Exception("Not Found");
                 _connection.CartItems.Remove(DeleteCartItem);
-                _connection.SaveChanges();
-            }
+                await _connection.SaveChangesAsync();
         }
     }
 }
