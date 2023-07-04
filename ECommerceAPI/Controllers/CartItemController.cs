@@ -1,5 +1,7 @@
 ﻿using ECommerceAPI.DTOs;
 using ECommerceAPI.Interfaces;
+using ECommerceAPI.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,24 +12,19 @@ namespace ECommerceAPI.Controllers
     public class CartItemController : ControllerBase
     {
         private readonly ICartItemRepository _cartItemRepository;
+        private readonly IMediator _mediator;
 
-        public CartItemController(ICartItemRepository cartItemRepository)
+        public CartItemController(ICartItemRepository cartItemRepository, IMediator mediator)
         {
             _cartItemRepository = cartItemRepository;
+            _mediator = mediator;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetCartItems()
         {
-            try
-            {
-                var cartitems = await _cartItemRepository.GetCartItems();
-                return Ok(cartitems);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
+            var cartitems = await _mediator.Send(new GetCartItemsQuery());
+            return Ok(cartitems);
         }
 
         [HttpPost]

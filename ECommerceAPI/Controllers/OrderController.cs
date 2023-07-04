@@ -67,6 +67,7 @@ namespace ECommerceAPI.Controllers
 
         [HttpDelete("{OrderId:Guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Delete(Guid OrderId)
         {

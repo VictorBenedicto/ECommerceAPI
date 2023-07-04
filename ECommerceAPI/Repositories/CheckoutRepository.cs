@@ -16,8 +16,9 @@ namespace ECommerceAPI.Repositories
 
         public async Task<Order> Checkout(DTOCheckOut checkout)
         {
+            var cartitems = _connection.CartItems.FirstOrDefault(c => c.OrderId == checkout.OrderId);
             var UpOrder = _connection.Orders.FirstOrDefault(o => o.OrderId == checkout.OrderId);
-            if (UpOrder == null)
+            if (UpOrder == null || cartitems == null)
             {
                 throw new Exception("Not Found");
             }
