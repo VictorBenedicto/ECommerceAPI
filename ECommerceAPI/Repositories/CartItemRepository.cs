@@ -3,6 +3,7 @@ using ECommerceAPI.Contexts;
 using ECommerceAPI.DTOs;
 using ECommerceAPI.Entities;
 using ECommerceAPI.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceAPI.Repositories
@@ -66,19 +67,15 @@ namespace ECommerceAPI.Repositories
             return nCartItem.CartItemId;
         }
 
-        public bool Put(Guid CartItemId, DTOUpdateCartItem upcartitem)
+        public async Task Put(Guid CartItemId, DTOUpdateCartItem upcartitem)
         {
-            var ChangeCartItem = _connection.CartItems.FirstOrDefault(c => c.CartItemId.Equals(CartItemId));
+            var ChangeCartItem = await _connection.CartItems.FirstOrDefaultAsync(c => c.CartItemId.Equals(CartItemId));
             if (ChangeCartItem != null)
             {
                 ChangeCartItem.CartItemName = upcartitem.CartItemName;
                 _connection.CartItems.Update(ChangeCartItem);
                 _connection.SaveChanges();
-                return true;
-            }
-            else
-            {
-                return false;
+                return;
             }
         }
 

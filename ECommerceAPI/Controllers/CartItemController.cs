@@ -47,12 +47,12 @@ namespace ECommerceAPI.Controllers
         [HttpPut("{CartItemId:Guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Put(Guid CartItemId, [FromBody] DTOUpdateCartItem upCartItem)
+        public async Task<IActionResult> Put(Guid CartItemId, [FromBody] DTOUpdateCartItem upCartItem)
         {
             try
             {
-                var change = _cartItemRepository.Put(CartItemId, upCartItem);
-                return Ok(change);
+                await _mediator.Send(new ChangeCartItemCommand(CartItemId, upCartItem));
+                return NoContent();
             }
             catch (Exception ex)
             {

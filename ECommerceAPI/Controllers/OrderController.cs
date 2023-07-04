@@ -1,4 +1,5 @@
-﻿using ECommerceAPI.DTOs;
+﻿using ECommerceAPI.Commands;
+using ECommerceAPI.DTOs;
 using ECommerceAPI.Interfaces;
 using ECommerceAPI.Queries;
 using MediatR;
@@ -57,7 +58,7 @@ namespace ECommerceAPI.Controllers
         {
             try
             {
-                await _orderRepository.Put(OrderId, uporder);
+                await _mediator.Send(new UpdateOrderStatusCommand(OrderId, uporder));
                 return NoContent();
             }
             catch (Exception ex)
