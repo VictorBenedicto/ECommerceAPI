@@ -1,5 +1,7 @@
 ﻿using ECommerceAPI.DTOs;
 using ECommerceAPI.Interfaces;
+using ECommerceAPI.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +12,12 @@ namespace ECommerceAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMediator _mediator;
 
-        public UserController(IUserRepository userRepository)
+        public UserController(IUserRepository userRepository, IMediator mediator)
         {
             _userRepository = userRepository;
+            _mediator = mediator;
         }
 
         [HttpGet("{UserId}", Name = "UserById")]
@@ -23,12 +27,8 @@ namespace ECommerceAPI.Controllers
         {
             try
             {
-                var user = await _userRepository.GetUser(UserId);
-                if (user == null)
-                {
-                    return NotFound();
-                }
-                return Ok(user);
+                var userbyid = await _mediator.Send(new GetUserByIdQuery(UserId));
+                return Ok(userbyid);
             }
             catch (Exception ex)
             {

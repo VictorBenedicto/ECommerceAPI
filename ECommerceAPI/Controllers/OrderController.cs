@@ -1,5 +1,7 @@
 ﻿using ECommerceAPI.DTOs;
 using ECommerceAPI.Interfaces;
+using ECommerceAPI.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,24 +12,27 @@ namespace ECommerceAPI.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IMediator _mediator;
 
-        public OrderController (IOrderRepository orderRepository)
+        public OrderController (IOrderRepository orderRepository, IMediator mediator)
         {
             _orderRepository = orderRepository;
+            _mediator = mediator;
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetOrders()
         {
             try
             {
-                var order = await _orderRepository.GetOrders();
-                return Ok(order);
+                var orders = await _mediator.Send(new GetOrdersQuery());
+                return Ok(orders);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
@@ -38,12 +43,8 @@ namespace ECommerceAPI.Controllers
         {
             try
             {
-                var order = await _orderRepository.GetOrder(OrderId);
-                if (order == null)
-                {
-                    return NotFound();
-                }
-                return Ok(order);
+                var orderbyid = await _mediator.Send(new GetOrderByIdQuery(OrderId));
+                return Ok(orderbyid);
             }
             catch (Exception ex)
             {

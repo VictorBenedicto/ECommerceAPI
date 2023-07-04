@@ -1,4 +1,5 @@
-﻿using ECommerceAPI.DTOs;
+﻿using ECommerceAPI.Commands;
+using ECommerceAPI.DTOs;
 using ECommerceAPI.Interfaces;
 using ECommerceAPI.Queries;
 using MediatR;
@@ -28,15 +29,14 @@ namespace ECommerceAPI.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post([FromBody] DTOAddCartItem cartItem)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> AddCartItem([FromBody] DTOAddCartItem cartItem)
         {
             try
             {
-                await _cartItemRepository.Post(cartItem);
-                return NoContent();
+                await _mediator.Send(new AddCartItemCommand(cartItem));
+                return StatusCode(201);
             }
             catch (Exception ex)
             {
