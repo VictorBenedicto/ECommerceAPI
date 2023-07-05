@@ -22,7 +22,7 @@ namespace ECommerceAPI.Controllers
             _mediator = mediator;
         }
 
-        [HttpPut]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Checkout([FromBody] DTOCheckOut checkout)
