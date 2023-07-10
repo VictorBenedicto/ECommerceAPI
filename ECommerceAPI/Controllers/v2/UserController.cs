@@ -2,13 +2,13 @@
 using ECommerceAPI.Interfaces;
 using ECommerceAPI.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ECommerceAPI.Controllers
+namespace ECommerceAPI.Controllers.v2
 {
-    [Route("api/user")]
     [ApiController]
+    [Route("api/v{version:apiVersion}/user")]
+    [ApiVersion("2.0")]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;

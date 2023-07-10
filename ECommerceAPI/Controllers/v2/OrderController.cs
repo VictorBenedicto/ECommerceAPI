@@ -3,19 +3,19 @@ using ECommerceAPI.DTOs;
 using ECommerceAPI.Interfaces;
 using ECommerceAPI.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ECommerceAPI.Controllers
+namespace ECommerceAPI.Controllers.v2
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/v{version:apiVersion}/order")]
+    [ApiVersion("2.0")]
     public class OrderController : ControllerBase
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IMediator _mediator;
 
-        public OrderController (IOrderRepository orderRepository, IMediator mediator)
+        public OrderController(IOrderRepository orderRepository, IMediator mediator)
         {
             _orderRepository = orderRepository;
             _mediator = mediator;
@@ -37,7 +37,7 @@ namespace ECommerceAPI.Controllers
             }
         }
 
-        [HttpGet ("OrderID", Name = "OrderById")]
+        [HttpGet("OrderID", Name = "OrderById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetOrder(Guid OrderId)

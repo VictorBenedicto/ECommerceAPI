@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
-namespace ECommerceAPI.Controllers
+namespace ECommerceAPI.Controllers.v1
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/v{version:apiVersion}/checkout")]
+    [ApiVersion("1.0")]
     public class CheckoutController : ControllerBase
     {
         private readonly ICheckoutRepository _checkoutRepository;
         private readonly IMediator _mediator;
 
-        public CheckoutController (ICheckoutRepository checkoutRepository, IMediator mediator)
+        public CheckoutController(ICheckoutRepository checkoutRepository, IMediator mediator)
         {
             _checkoutRepository = checkoutRepository;
             _mediator = mediator;

@@ -6,10 +6,11 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ECommerceAPI.Controllers
+namespace ECommerceAPI.Controllers.v1
 {
-    [Route("api/cartItem")]
     [ApiController]
+    [Route("api/v{version:apiVersion}/cartItem")]
+    [ApiVersion("1.0")]
     public class CartItemController : ControllerBase
     {
         private readonly ICartItemRepository _cartItemRepository;
