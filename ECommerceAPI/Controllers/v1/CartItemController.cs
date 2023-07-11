@@ -23,6 +23,8 @@ namespace ECommerceAPI.Controllers.v1
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetCartItems()
         {
             var cartitems = await _mediator.Send(new GetCartItemsQuery());

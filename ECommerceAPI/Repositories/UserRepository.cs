@@ -3,8 +3,6 @@ using ECommerceAPI.Contexts;
 using ECommerceAPI.DTOs;
 using ECommerceAPI.Entities;
 using ECommerceAPI.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System.Data;
 
 namespace ECommerceAPI.Repositories
 {
