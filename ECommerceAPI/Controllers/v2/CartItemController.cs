@@ -1,9 +1,7 @@
 ﻿using ECommerceAPI.Commands;
 using ECommerceAPI.DTOs;
-using ECommerceAPI.Interfaces;
 using ECommerceAPI.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceAPI.Controllers.v2
@@ -13,12 +11,10 @@ namespace ECommerceAPI.Controllers.v2
     [ApiVersion("2.0")]
     public class CartItemController : ControllerBase
     {
-        private readonly ICartItemRepository _cartItemRepository;
         private readonly IMediator _mediator;
 
-        public CartItemController(ICartItemRepository cartItemRepository, IMediator mediator)
+        public CartItemController(IMediator mediator)
         {
-            _cartItemRepository = cartItemRepository;
             _mediator = mediator;
         }
 
