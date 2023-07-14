@@ -1,7 +1,8 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using ECommerceAPI.Contexts;
-using ECommerceAPI.Interfaces;
 using ECommerceAPI.Middlewares;
-using ECommerceAPI.Repositories;
+using ECommerceAPI.Miscellaneous;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
@@ -37,11 +38,17 @@ builder.Services.AddDbContext<EcomDbContext>(option =>
     option.UseSqlServer(builder.Configuration.GetConnectionString("SQLDefaultConnection"));
 });
 
-builder.Services.AddSingleton<DapperContext>();
-builder.Services.AddScoped<IOrderRepository, OrderRepository>();
-builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<ICheckoutRepository, CheckoutRepository>();
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+
+// Register services directly with Autofac here. Don't
+// call builder.Populate(), that happens in AutofacServiceProviderFactory.
+builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutofacModule()));
+
+//builder.Services.AddSingleton<DapperContext>();
+//builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+//builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+//builder.Services.AddScoped<IUserRepository, UserRepository>();
+//builder.Services.AddScoped<ICheckoutRepository, CheckoutRepository>();
 builder.Services.AddMediatR(options => options.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
